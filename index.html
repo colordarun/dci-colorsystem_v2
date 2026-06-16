@@ -20,34 +20,16 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
     :root {
-        --bg: #1b1b1e;
-        --panel: #26262b;
-        --panel2: #2e2e34;
-        --line: #65656e;
-        --text: #ececee;
-        --muted: #9b9ba3;
-        --faint: #6c6c75;
-        --surround: #adadad;
-        --accent: #C75B12;
-        --accent2: #e08a4d;
-        --ok: #5aa469;
-        --warn: #c9923a;
+        --bg: #1b1b1e; --panel: #26262b; --panel2: #2e2e34; --line: #65656e;
+        --text: #ececee; --muted: #9b9ba3; --faint: #6c6c75; --surround: #adadad;
+        --accent: #C75B12; --accent2: #e08a4d; --ok: #5aa469; --warn: #c9923a;
         --mono: ui-monospace,"SF Mono","Cascadia Code","Consolas",monospace;
         --ui: "Pretendard Variable",Pretendard,system-ui,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     }
     [data-theme="light"] {
-        --bg: #f4f4f6;
-        --panel: #ffffff;
-        --panel2: #eef0f3;
-        --line: #65656e;
-        --text: #1f2024;
-        --muted: #5d616b;
-        --faint: #9095a0;
-        --surround: #adadad;
-        --accent: #C75B12;
-        --accent2: #b85e1e;
-        --ok: #3f8a52;
-        --warn: #a9762a;
+        --bg: #f4f4f6; --panel: #ffffff; --panel2: #eef0f3; --line: #65656e;
+        --text: #1f2024; --muted: #5d616b; --faint: #9095a0; --surround: #adadad;
+        --accent: #C75B12; --accent2: #b85e1e; --ok: #3f8a52; --warn: #a9762a;
     }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ui);font-size:14px;-webkit-font-smoothing:antialiased}
@@ -324,8 +306,8 @@ function renderChart(){
   const maxDE=(heat&&refIdx>=0)?40:1;
   keys.forEach(h=>{
     const rows=DATA.filter(r=>r[H]===h);
-    // const maxC=Math.max(...rows.map(r=>r[C])); <--채도 제한 없음
-    const maxC=Math.min(30,Math.max(...rows.map(r=>r[C])));
+    // const maxC=Math.max(...rows.map(r=>r[C])); <--채도 전체표시
+    const maxC = Math.min(26, Math.max(...rows.map(r => r[C])));
     const page=document.createElement('div');page.className='page';
     const ph=document.createElement('div');ph.className='ph';ph.textContent=h;page.appendChild(ph);
     const grid=document.createElement('div');grid.className='grid';
@@ -388,7 +370,8 @@ function renderToneMap(){
   if(refIdx<0)return;
   const ref=DATA[refIdx], h=ref[H];
   const rows=DATA.filter(r=>r[H]===h);
-  const maxC=Math.max(10,...rows.map(r=>r[C]));
+  // const maxC=Math.max(10,...rows.map(r=>r[C])); <-- 채도전체표시
+  const maxC = Math.min(26, Math.max(10, ...rows.map(r => r[C])));
   const px=18,py=20,W=240,Hh=240, pw=W-px-10, ph=Hh-py-18;
   const xC=c=>px+(c/maxC)*pw;
   const yV=v=>py+(1-(v-1)/8)*ph;
@@ -535,7 +518,8 @@ function updateChromaDisabled(){
 
 function buildFilters(){
   const vs=[...new Set(DATA.map(r=>r[V]))].sort((a,b)=>a-b);
-  const cs=[...new Set(DATA.map(r=>r[C]))].sort((a,b)=>a-b);
+  // const cs=[...new Set(DATA.map(r=>r[C]))].sort((a,b)=>a-b);
+  const cs = [...new Set(DATA.map(r => r[C]))].filter(c => c <= 26).sort((a, b) => a - b);
   const mk=(el,vals,num)=>vals.forEach(v=>{
     const l=document.createElement('label');l.className='chip';
     l.innerHTML='<input type="checkbox" value="'+v+'"> '+v;
