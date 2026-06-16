@@ -161,7 +161,7 @@ footer b{color:var(--muted)}
   <header>
     <div class="brand">
       <h1>DCI 유잰 컬러파인더</h1>
-      <div class="sub">체계적인 컬러 큐레이팅을 위한 <b>YOUZEN COLOR-FINDER</b> 컬러 분석툴<br>(C)2026 Darun Color Institute all rights reserved.</div>
+      <div class="sub"> <b>YOUZEN COLOR-FINDER</b><br>체계적인 컬러 큐레이팅을 위한 컬러 분석툴<br><br>(C)2026 Darun Color Institute all rights reserved.<br /></div>
     </div>
     <div class="huectl">
       <button class="btn" id="themeBtn" type="button" aria-pressed="false" title="밝은 모드 / 어두운 모드 전환">밝은 모드</button>
@@ -518,7 +518,7 @@ function updateChromaDisabled(){
 
 function buildFilters(){
   const vs=[...new Set(DATA.map(r=>r[V]))].sort((a,b)=>a-b);
-  // const cs=[...new Set(DATA.map(r=>r[C]))].sort((a,b)=>a-b);
+  // const cs=[...new Set(DATA.map(r=>r[C]))].sort((a,b)=>a-b); <-- 채도전체표시
   const cs = [...new Set(DATA.map(r => r[C]))].filter(c => c <= 26).sort((a, b) => a - b);
   const mk=(el,vals,num)=>vals.forEach(v=>{
     const l=document.createElement('label');l.className='chip';
