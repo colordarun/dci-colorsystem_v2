@@ -324,7 +324,7 @@ function renderChart(){
   const maxDE=(heat&&refIdx>=0)?40:1;
   keys.forEach(h=>{
     const rows=DATA.filter(r=>r[H]===h);
-    const maxC=Math.max(...rows.map(r=>r[C]));
+    const maxC=Math.min(34,Math.max(...rows.map(r=>r[C])));
     const page=document.createElement('div');page.className='page';
     const ph=document.createElement('div');ph.className='ph';ph.textContent=h;page.appendChild(ph);
     const grid=document.createElement('div');grid.className='grid';
